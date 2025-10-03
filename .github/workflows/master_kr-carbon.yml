@@ -33,6 +33,32 @@ jobs:
         run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      - name: 'Testing'
+        shell: bash
+        run: |
+            mkdir -p test-results
+            source venv/bin/activate
+            python -m pytest \
+              -- junitxml=test-results/pytest-report.hmtl \
+              --html=test-results/pytest-report.html \
+              --self-contained-html
+            
+
+      - name: Test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: test-results/
+          retention-days: 7
+        # if: always()
+        # uses: actions/upload-artifact@v4
+        # with:
+        #   name: pytest-results
+        #   path: |
+        #     test-results/
+        #   retention-days: 7
+
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
