@@ -39,7 +39,7 @@ jobs:
             mkdir -p test-results
             source venv/bin/activate
             python -m pytest \
-              -- junitxml=test-results/pytest-report.hmtl \
+              --junitxml=test-results/pytest-report.hmtl \
               --html=test-results/pytest-report.html \
               --self-contained-html
             
